@@ -1,0 +1,399 @@
+{
+  "type": "workflow_collections",
+  "data": [
+    {
+      "@type": "WorkflowCollection",
+      "name": "Sample - Symantec Messaging Gateway - 1.0.0",
+      "description": "Symantec Messaging Gateway is an email security solution that provides inbound and outbound messaging security allow to perform containment and corrective actions like block Domain/Email/IP or unblock Domain/Email/IP",
+      "visible": true,
+      "image": null,
+      "workflows": [
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Unblock IP",
+          "description": "Remove an IP address from the list of bad senders",
+          "collection": "/api/3/workflow_collections/cc3c755c-3882-453a-af6f-555039384392",
+          "tag": "#Symantec Messaging Gateway",
+          "isActive": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/92552e59-3acc-4038-8a77-eb0d0e07645d",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Unblock IP",
+              "arguments": {
+                "name": "Symantec Messaging Gateway",
+                "config": "00a2e73c-54f2-4489-b009-56641f0041c9",
+                "params": {
+                  "ip": "89.223.29.252"
+                },
+                "version": "1.0.0",
+                "connector": "symantec-messaging-gateway",
+                "operation": "unblacklist_ip",
+                "operationTitle": "Unblock IP",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "214",
+              "top": "125",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "7b155baf-5afd-4b6e-b6d7-41567f32e427"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "arguments": {
+                "route": "ec7d33c7-8553-4631-bd50-532946109417",
+                "title": "Symantec Messaging Gateway : Unblock IP",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": []
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "92552e59-3acc-4038-8a77-eb0d0e07645d"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "a8fabb0f-0e3a-40fd-a228-1ce0348ad3fc",
+              "name": "Start -> Unblock IP",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/7b155baf-5afd-4b6e-b6d7-41567f32e427",
+              "sourceStep": "/api/3/workflow_steps/92552e59-3acc-4038-8a77-eb0d0e07645d"
+            }
+          ],
+          "uuid": "22de7ace-b598-4f6b-84fa-7b40d9806134"
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Unblock Email",
+          "description": "Remove an email address from the list of bad senders",
+          "collection": "/api/3/workflow_collections/cc3c755c-3882-453a-af6f-555039384392",
+          "tag": "#Symantec Messaging Gateway",
+          "isActive": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/73ce1494-0e2c-485e-95be-59d5796fd022",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "arguments": {
+                "route": "6903f5e0-3fbf-4661-b593-665cd4a8424a",
+                "title": "Symantec Messaging Gateway : Unblock Email",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": []
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "73ce1494-0e2c-485e-95be-59d5796fd022"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Unblock Email",
+              "arguments": {
+                "name": "Symantec Messaging Gateway",
+                "config": "00a2e73c-54f2-4489-b009-56641f0041c9",
+                "params": {
+                  "email_id": "test@example.com"
+                },
+                "version": "1.0.0",
+                "connector": "symantec-messaging-gateway",
+                "operation": "unblacklist_email",
+                "operationTitle": "Unblock Email",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "192",
+              "top": "109",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "e1433779-2764-48af-ac51-2fc11387748e"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "e1930cac-b1d4-4105-a70d-82aa91244666",
+              "name": "Start -> Unblock Email",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/e1433779-2764-48af-ac51-2fc11387748e",
+              "sourceStep": "/api/3/workflow_steps/73ce1494-0e2c-485e-95be-59d5796fd022"
+            }
+          ],
+          "uuid": "b21f45b1-28cf-4c9f-b229-31ea881860bc"
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Block Domain",
+          "description": "Add domain to the list of bad senders",
+          "collection": "/api/3/workflow_collections/cc3c755c-3882-453a-af6f-555039384392",
+          "tag": "#Symantec Messaging Gateway",
+          "isActive": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/69a057a8-9e52-40d7-9964-f457924212aa",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "arguments": {
+                "route": "afd92568-35bf-4e12-8b56-7fb18cc5f5db",
+                "title": "Symantec Messaging Gateway : Block Domain",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": []
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "69a057a8-9e52-40d7-9964-f457924212aa"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Block Domain",
+              "arguments": {
+                "name": "Symantec Messaging Gateway",
+                "config": "00a2e73c-54f2-4489-b009-56641f0041c9",
+                "params": {
+                  "domain": "xyz.com"
+                },
+                "version": "1.0.0",
+                "connector": "symantec-messaging-gateway",
+                "operation": "blacklist_domain",
+                "operationTitle": "Block Domain",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "206",
+              "top": "112",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "b8fca0ba-a28c-4db5-8f56-5e32a668de8f"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "3db552dc-f994-43ce-8bce-670b171f15d0",
+              "name": "Start -> Block Domain",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/b8fca0ba-a28c-4db5-8f56-5e32a668de8f",
+              "sourceStep": "/api/3/workflow_steps/69a057a8-9e52-40d7-9964-f457924212aa"
+            }
+          ],
+          "uuid": "4a6dc380-09b0-4277-bce5-ca73674c8593"
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Block Email",
+          "description": "Add an email address into the list of bad senders",
+          "collection": "/api/3/workflow_collections/cc3c755c-3882-453a-af6f-555039384392",
+          "tag": "#Symantec Messaging Gateway",
+          "isActive": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/f2c89ce3-8f22-43cc-b401-ff11151ae64a",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Block Email",
+              "arguments": {
+                "name": "Symantec Messaging Gateway",
+                "config": "00a2e73c-54f2-4489-b009-56641f0041c9",
+                "params": {
+                  "email_id": "test@example.com"
+                },
+                "version": "1.0.0",
+                "connector": "symantec-messaging-gateway",
+                "operation": "blacklist_email",
+                "operationTitle": "Block Email",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "184",
+              "top": "109",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "8b431a5d-aba7-4dcd-8643-e8494af4f6de"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "arguments": {
+                "route": "0d150fb8-ccc1-404c-8423-337327e17e90",
+                "title": "Symantec Messaging Gateway : Block Email",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": []
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "f2c89ce3-8f22-43cc-b401-ff11151ae64a"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "7cbb1f72-a6e0-4078-8f64-4a50b242c483",
+              "name": "Start -> Block Email",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/8b431a5d-aba7-4dcd-8643-e8494af4f6de",
+              "sourceStep": "/api/3/workflow_steps/f2c89ce3-8f22-43cc-b401-ff11151ae64a"
+            }
+          ],
+          "uuid": "72254054-1ec1-49ef-83df-d1dc0cf790ee"
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Unblock Domain",
+          "description": "Remove a domain from the list of Bad senders",
+          "collection": "/api/3/workflow_collections/cc3c755c-3882-453a-af6f-555039384392",
+          "tag": "#Symantec Messaging Gateway",
+          "isActive": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/09c35583-27f6-4b23-afa4-a5d2d3699c52",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "arguments": {
+                "route": "ceff6f27-1d1e-4eff-a6ea-cac625eeb597",
+                "title": "Symantec Messaging Gateway : Unblock Domain",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": []
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "09c35583-27f6-4b23-afa4-a5d2d3699c52"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Unblock Domain",
+              "arguments": {
+                "name": "Symantec Messaging Gateway",
+                "config": "00a2e73c-54f2-4489-b009-56641f0041c9",
+                "params": {
+                  "domain": "xyz.com"
+                },
+                "version": "1.0.0",
+                "connector": "symantec-messaging-gateway",
+                "operation": "unblacklist_domain",
+                "operationTitle": "Unblock Domain",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "182",
+              "top": "113",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "9eaee4c4-1487-4fd1-aaa7-9bbbfb42166d"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "db525d8b-5018-4812-bd19-50879cce7e48",
+              "name": "Start -> Unblock Domain",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/9eaee4c4-1487-4fd1-aaa7-9bbbfb42166d",
+              "sourceStep": "/api/3/workflow_steps/09c35583-27f6-4b23-afa4-a5d2d3699c52"
+            }
+          ],
+          "uuid": "ace487a4-41fa-4a5c-ba8f-b4154960f3b0"
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Block IP",
+          "description": "Add an IP address to the list of bad senders",
+          "collection": "/api/3/workflow_collections/cc3c755c-3882-453a-af6f-555039384392",
+          "tag": "#Symantec Messaging Gateway",
+          "isActive": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/e2dafd76-2cde-4bb2-b740-e39bb5e0108c",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Block IP",
+              "arguments": {
+                "name": "Symantec Messaging Gateway",
+                "config": "00a2e73c-54f2-4489-b009-56641f0041c9",
+                "params": {
+                  "ip": "89.223.29.252"
+                },
+                "version": "1.0.0",
+                "connector": "symantec-messaging-gateway",
+                "operation": "blacklist_ip",
+                "operationTitle": "Block IP",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "187",
+              "top": "109",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "46a14c7b-fd58-4986-ac15-2f10369f4aea"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "arguments": {
+                "route": "2d073d6a-6278-47b4-ab32-6772ae3977a4",
+                "title": "Symantec Messaging Gateway : Block IP",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": []
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "e2dafd76-2cde-4bb2-b740-e39bb5e0108c"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "64cbb897-4c0e-4500-8d53-b7dc97bdca55",
+              "name": "Start -> Block IP",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/46a14c7b-fd58-4986-ac15-2f10369f4aea",
+              "sourceStep": "/api/3/workflow_steps/e2dafd76-2cde-4bb2-b740-e39bb5e0108c"
+            }
+          ],
+          "uuid": "2946e830-edfe-4849-8d1b-9ec1441662e8"
+        }
+      ],
+      "uuid": "cc3c755c-3882-453a-af6f-555039384392"
+    }
+  ]
+}

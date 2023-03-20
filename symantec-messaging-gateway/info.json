@@ -1,0 +1,166 @@
+{
+  "name": "symantec-messaging-gateway",
+  "label": "Symantec Messaging Gateway",
+  "version": "1.0.0",
+  "description": "Symantec Messaging Gateway is an email security solution which provides inbound and outbound messaging security. Also it can perform containment and corrective actions like block Domain/Email/IP or unblock Domain/Email/IP",
+  "publisher": "CyberSponse",
+  "cs_approved": true,
+  "cs_compatible": true,
+  "category": "Email Gateway",
+  "icon_small_name": "small.png",
+  "icon_large_name": "large.png",
+  "help_online": "https://help.cybersponse.com/support/solutions/articles/17000071136-symantec-messaging-gateway-v1-0-0",
+  "configuration": {
+    "fields": [
+      {
+        "title": "Server URL",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "type": "text",
+        "name": "base_url"
+      },
+      {
+        "title": "Username",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "type": "text",
+        "name": "user_name"
+      },
+      {
+        "title": "Password",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "type": "password",
+        "name": "password"
+      },
+      {
+        "title": "Verify SSL",
+        "required": false,
+        "editable": true,
+        "visible": true,
+        "type": "checkbox",
+        "name": "verify_ssl",
+        "value": true
+      }
+    ]
+  },
+  "operations": [
+    {
+      "operation": "blacklist_email",
+      "title": "Block Email",
+      "description": "Add an email address to the list of bad senders",
+      "category": "Containment",
+      "annotation": "block_email",
+      "output_schema": "",
+      "parameters": [
+        {
+          "title": "Email Address",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "email",
+          "name": "email_id"
+        }
+      ],
+      "enabled": true
+    },
+    {
+      "operation": "unblacklist_email",
+      "title": "Unblock Email",
+      "description": "Remove an email address from the list of bad senders",
+      "category": "Remediation",
+      "annotation": "unblock_email",
+      "output_schema": "",
+      "parameters": [
+        {
+          "title": "Email Address",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "email",
+          "name": "email_id"
+        }
+      ],
+      "enabled": true
+    },
+    {
+      "operation": "blacklist_domain",
+      "title": "Block Domain",
+      "description": "Add domain to the list of bad senders",
+      "category": "Containment",
+      "annotation": "block_domain",
+      "output_schema": "",
+      "parameters": [
+        {
+          "title": "Domain",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "domain"
+        }
+      ],
+      "enabled": true
+    },
+    {
+      "operation": "unblacklist_domain",
+      "title": "Unblock Domain",
+      "description": "Remove a domain from the list of Bad senders",
+      "category": "Remediation",
+      "annotation": "unblock_domain",
+      "output_schema": "",
+      "parameters": [
+        {
+          "title": "Domain",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "domain"
+        }
+      ],
+      "enabled": true
+    },
+    {
+      "operation": "blacklist_ip",
+      "title": "Block IP",
+      "description": "Add an IP address to the list of bad senders",
+      "category": "Containment",
+      "annotation": "block_ip",
+      "output_schema": "",
+      "parameters": [
+        {
+          "title": "IP Address",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "ip"
+        }
+      ],
+      "enabled": true
+    },
+    {
+      "operation": "unblacklist_ip",
+      "title": "Unblock IP",
+      "description": "Remove an IP address from the list of bad senders",
+      "category": "Remediation",
+      "annotation": "unblock_ip",
+      "output_schema": "",
+      "parameters": [
+        {
+          "title": "IP Address",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "ip"
+        }
+      ],
+      "enabled": true
+    }
+  ]
+}
