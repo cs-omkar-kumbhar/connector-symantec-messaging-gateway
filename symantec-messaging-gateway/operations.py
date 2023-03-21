@@ -1,11 +1,87 @@
 import requests
+import arrow
+import re
+import json
 from bs4 import BeautifulSoup
+from requests_toolbelt.utils import dump
 from connectors.core.connector import ConnectorError, get_logger
 
 logger = get_logger('symantec-messaging-gateway')
 SENDER_GRP = 'reputation/sender-group/'
+AUDIT_LOGS = 'status/message-audit/MessageAuditFlow'
 VIEW_SENDER_GRP = SENDER_GRP + 'viewSenderGroup.do'
+filter_map={
+"Sender":"SENDER",
+"Recipient":"RCPTS",
+"Subject":"SUBJECT",
+"Audit ID":"AUDIT_UID",
+"Connection IP":"ACCEPT",
+"Logical IP":"LOGICAL_IP"
+}
 
+def html_to_json(content):
+    table_data = []
+    table_headers = []
+    soup = BeautifulSoup(content, "html.parser")
+    tab = soup.find("table",{"class":"table"})
+    rows = tab.find_all("tr")
+    for tr_index, row in enumerate(rows):
+        cells = row.find_all("td")
+        items = {}
+        link = ''
+        js_text = ''
+        for td_index, cell in enumerate(cells):
+            if tr_index == 0:
+                table_headers.append(cell.text.strip())
+            else:
+                links = cell.find_all("a", href=True)
+                cell_content = cell.text.strip()
+                logger.debug('Parsed HTML table cell Content: {}'.format(cell_content))
+                script = cell.find("script")
+                if script and len(script) > 0:
+                    js_text = re.search(r"'([^']*)'", script.text).group(1)
+                    logger.debug('Parsed HTML table cell JS Script: {}'.format(js_text))
+                if links and len(links) > 0:
+                    link = links[0]['href']
+                    audit_uid = re.search(r'[0-9a-fA-F]{8}\-[0-9a-fA-F]{16}\-[0-9a-fA-F]{2}\-[0-9a-fA-F]{12}',link).group()
+                    items.update({'auditUID':audit_uid})
+                    logger.debug('Parsed HTML table cell Audit UUID: {}'.format(audit_uid))
+
+                items.update({table_headers[td_index]: cell_content if len(cell_content) > 0 else js_text})
+        if items:
+            table_data.append(items)
+        
+    return table_data    
+
+
+def build_search_payload(params):
+    filters = {
+'hostFilterId': 0,
+'optionalFilterId': "none",
+'optionalFilterValue': '',
+'timeRange': 'timeRange.customize'
+}
+    for k, v in params.items():
+        if 'start_time' in k:
+            start_time = arrow.get(v)
+            filters.update({"startDate": start_time.format("MM/DD/YY")})
+            filters.update({"startHourSelected": start_time.format("HH")})
+            filters.update({"startMinuteSelected": start_time.format("mm")})
+
+        elif 'end_time' in k:
+            end_time = arrow.get(v)
+            filters.update({"endDate": end_time.format("MM/DD/YY")})
+            filters.update({"endHourSelected": end_time.format("HH")})
+            filters.update({"endMinuteSelected": end_time.format("mm")})
+
+        elif 'mandatoryFilterId' in k:
+            filters.update({k:filter_map[v]})
+
+        else:
+            filters.update({k:v})
+
+    return filters  
+  
 
 class SMG:
 
@@ -18,12 +94,13 @@ class SMG:
         self.base_url = base_url
 
 
-    def _make_request(self, endpoint, method='get', params=None):
+    def _make_request(self, endpoint, method='get', params=None, data=None, headers=None):
         try:
             url = self.base_url + endpoint
             logger.info('Executing url {}'.format(url))
             call_method = getattr(self._session, method)
-            response = call_method(url, params=params, verify=self.verify_ssl)
+            response = call_method(url, params=params, data=data, headers=headers, verify=self.verify_ssl)
+            logger.debug('\nreq data:\n{0}\n'.format(dump.dump_all(response).decode('utf-8')))
             if response.ok:
                 logger.info('successfully get response for url {}'.format(url))
                 return response
@@ -189,7 +266,20 @@ class SMG:
 
     def test_connection(self, config):
         return self._login(config)
+        
+        
+    def search_audit_logs(self, config, params):
+        try:
+            search_params = build_search_payload(params)
+            token = self._login(config)
+            search_params.update({'symantec.brightmail.key.TOKEN': token})
+            endpoint = AUDIT_LOGS + '$search.flo'
+            resp = self._make_request(AUDIT_LOGS + '$search.flo', 'post', data=search_params)
+            json_response = html_to_json(resp.text)
+            logger.debug(json.dumps(json_response, indent = 3))
+            return html_to_json(resp.text)
 
-
-
-
+        except Exception as err:
+            logger.exception(str(err))
+            raise ConnectorError(str(err))
+        raise ConnectorError(resp.content)

@@ -14,7 +14,8 @@ class SymantecMessagingGateway(Connector):
                 'blacklist_domain': smg.blacklist_domain,
                 'unblacklist_domain': smg.unblacklist_domain,
                 'blacklist_ip': smg.blacklist_ip,
-                'unblacklist_ip': smg.unblacklist_ip
+                'unblacklist_ip': smg.unblacklist_ip,
+              	'search_audit_logs': smg.search_audit_logs
             }
             action = operations.get(operation)
             return action(config, params)
