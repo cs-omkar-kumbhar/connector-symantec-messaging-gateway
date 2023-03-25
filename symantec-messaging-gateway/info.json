@@ -1,166 +1,252 @@
 {
-  "name": "symantec-messaging-gateway",
-  "label": "Symantec Messaging Gateway",
-  "version": "1.0.0",
-  "description": "Symantec Messaging Gateway is an email security solution which provides inbound and outbound messaging security. Also it can perform containment and corrective actions like block Domain/Email/IP or unblock Domain/Email/IP",
-  "publisher": "CyberSponse",
-  "cs_approved": true,
-  "cs_compatible": true,
-  "category": "Email Gateway",
-  "icon_small_name": "small.png",
-  "icon_large_name": "large.png",
-  "help_online": "https://help.cybersponse.com/support/solutions/articles/17000071136-symantec-messaging-gateway-v1-0-0",
-  "configuration": {
-    "fields": [
-      {
-        "title": "Server URL",
-        "required": true,
-        "editable": true,
-        "visible": true,
-        "type": "text",
-        "name": "base_url"
-      },
-      {
-        "title": "Username",
-        "required": true,
-        "editable": true,
-        "visible": true,
-        "type": "text",
-        "name": "user_name"
-      },
-      {
-        "title": "Password",
-        "required": true,
-        "editable": true,
-        "visible": true,
-        "type": "password",
-        "name": "password"
-      },
-      {
-        "title": "Verify SSL",
-        "required": false,
-        "editable": true,
-        "visible": true,
-        "type": "checkbox",
-        "name": "verify_ssl",
-        "value": true
-      }
-    ]
-  },
-  "operations": [
-    {
-      "operation": "blacklist_email",
-      "title": "Block Email",
-      "description": "Add an email address to the list of bad senders",
-      "category": "Containment",
-      "annotation": "block_email",
-      "output_schema": "",
-      "parameters": [
-        {
-          "title": "Email Address",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "email",
-          "name": "email_id"
-        }
-      ],
-      "enabled": true
+    "name": "symantec-messaging-gateway",
+    "version": "1.1.0",
+    "label": "Symantec Messaging Gateway",
+    "description": "Symantec Messaging Gateway is an email security solution which provides inbound and outbound messaging security. Also it can perform containment and corrective actions like block Domain/Email/IP or unblock Domain/Email/IP",
+    "publisher": "",
+    "icon_small_name": "small.png",
+    "icon_large_name": "large.png",
+    "category": "Email Gateway",
+    "configuration": {
+        "fields": [
+            {
+                "title": "Server URL",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "base_url"
+            },
+            {
+                "title": "Username",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "user_name"
+            },
+            {
+                "title": "Password",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "password",
+                "name": "password"
+            },
+            {
+                "title": "Verify SSL",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "checkbox",
+                "name": "verify_ssl",
+                "value": true
+            }
+        ]
     },
-    {
-      "operation": "unblacklist_email",
-      "title": "Unblock Email",
-      "description": "Remove an email address from the list of bad senders",
-      "category": "Remediation",
-      "annotation": "unblock_email",
-      "output_schema": "",
-      "parameters": [
+    "operations": [
         {
-          "title": "Email Address",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "email",
-          "name": "email_id"
-        }
-      ],
-      "enabled": true
-    },
-    {
-      "operation": "blacklist_domain",
-      "title": "Block Domain",
-      "description": "Add domain to the list of bad senders",
-      "category": "Containment",
-      "annotation": "block_domain",
-      "output_schema": "",
-      "parameters": [
+            "operation": "search_audit_logs",
+            "title": "Search Emails",
+            "description": "Search emails in audit logs",
+            "category": "Analytics",
+            "annotation": "search_audit_logs",
+            "output_schema": "",
+            "parameters": [
+                {
+                    "title": "Search By",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "select",
+                    "options": [
+                        "Sender",
+                        "Recipient",
+                        "Subject",
+                        "Audit ID",
+                        "Connection IP",
+                        "Logical IP"
+                    ],
+                    "name": "mandatoryFilterId",
+                    "value": "Subject",
+                    "tooltip": "Select search by",
+                    "description": "Select search by."
+                },
+                {
+                    "title": "Search Value",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "text",
+                    "name": "mandatoryFilterValue",
+                    "value": "",
+                    "tooltip": "Value to search for based on the search by type. Exp baduser@badomain.com for Search by Sender",
+                    "description": "Value to search for based on the search by type. Exp baduser@badomain.com for Search by Sender"
+                },
+                {
+                    "title": "Start Time",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "datetime",
+                    "name": "start_time",
+                    "value": "",
+                    "tooltip": "Search start time (Search from:)",
+                    "description": "Search start time (Search from:)"
+                },
+                {
+                    "title": "End Time",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "datetime",
+                    "name": "end_time",
+                    "value": "",
+                    "tooltip": "Search end time (Search until:)",
+                    "description": "Search end time (Search until:)"
+                },
+                {
+                    "title": "Limit",
+                    "required": false,
+                    "editable": true,
+                    "visible": true,
+                    "type": "integer",
+                    "name": "entriesPerPage",
+                    "value": 15,
+                    "tooltip": "Entries to return per page",
+                    "description": "Entries to return per page"
+                },
+                {
+                    "title": "Offset",
+                    "required": false,
+                    "editable": true,
+                    "visible": true,
+                    "type": "integer",
+                    "name": "pageNumber",
+                    "value": 1,
+                    "tooltip": "Page number",
+                    "description": "Page number"
+                }
+            ],
+            "enabled": true
+        },
         {
-          "title": "Domain",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "domain"
-        }
-      ],
-      "enabled": true
-    },
-    {
-      "operation": "unblacklist_domain",
-      "title": "Unblock Domain",
-      "description": "Remove a domain from the list of Bad senders",
-      "category": "Remediation",
-      "annotation": "unblock_domain",
-      "output_schema": "",
-      "parameters": [
+            "operation": "blacklist_email",
+            "title": "Block Email",
+            "description": "Add an email address to the list of bad senders",
+            "category": "Containment",
+            "annotation": "block_email",
+            "output_schema": "",
+            "parameters": [
+                {
+                    "title": "Email Address",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "email",
+                    "name": "email_id"
+                }
+            ],
+            "enabled": true
+        },
         {
-          "title": "Domain",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "domain"
-        }
-      ],
-      "enabled": true
-    },
-    {
-      "operation": "blacklist_ip",
-      "title": "Block IP",
-      "description": "Add an IP address to the list of bad senders",
-      "category": "Containment",
-      "annotation": "block_ip",
-      "output_schema": "",
-      "parameters": [
+            "operation": "unblacklist_email",
+            "title": "Unblock Email",
+            "description": "Remove an email address from the list of bad senders",
+            "category": "Remediation",
+            "annotation": "unblock_email",
+            "output_schema": "",
+            "parameters": [
+                {
+                    "title": "Email Address",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "email",
+                    "name": "email_id"
+                }
+            ],
+            "enabled": true
+        },
         {
-          "title": "IP Address",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "ip"
-        }
-      ],
-      "enabled": true
-    },
-    {
-      "operation": "unblacklist_ip",
-      "title": "Unblock IP",
-      "description": "Remove an IP address from the list of bad senders",
-      "category": "Remediation",
-      "annotation": "unblock_ip",
-      "output_schema": "",
-      "parameters": [
+            "operation": "blacklist_domain",
+            "title": "Block Domain",
+            "description": "Add domain to the list of bad senders",
+            "category": "Containment",
+            "annotation": "block_domain",
+            "output_schema": "",
+            "parameters": [
+                {
+                    "title": "Domain",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "text",
+                    "name": "domain"
+                }
+            ],
+            "enabled": true
+        },
         {
-          "title": "IP Address",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "ip"
+            "operation": "unblacklist_domain",
+            "title": "Unblock Domain",
+            "description": "Remove a domain from the list of Bad senders",
+            "category": "Remediation",
+            "annotation": "unblock_domain",
+            "output_schema": "",
+            "parameters": [
+                {
+                    "title": "Domain",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "text",
+                    "name": "domain"
+                }
+            ],
+            "enabled": true
+        },
+        {
+            "operation": "blacklist_ip",
+            "title": "Block IP",
+            "description": "Add an IP address to the list of bad senders",
+            "category": "Containment",
+            "annotation": "block_ip",
+            "output_schema": "",
+            "parameters": [
+                {
+                    "title": "IP Address",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "text",
+                    "name": "ip"
+                }
+            ],
+            "enabled": true
+        },
+        {
+            "operation": "unblacklist_ip",
+            "title": "Unblock IP",
+            "description": "Remove an IP address from the list of bad senders",
+            "category": "Remediation",
+            "annotation": "unblock_ip",
+            "output_schema": "",
+            "parameters": [
+                {
+                    "title": "IP Address",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "text",
+                    "name": "ip"
+                }
+            ],
+            "enabled": true
         }
-      ],
-      "enabled": true
-    }
-  ]
+    ],
+    "forked_from": "symantec-messaging-gateway_1_0_0",
+    "cs_approved": false,
+    "cs_compatible": true,
+    "help_online": "https://help.cybersponse.com/support/solutions/articles/17000071136-symantec-messaging-gateway-v1-0-0"
 }
