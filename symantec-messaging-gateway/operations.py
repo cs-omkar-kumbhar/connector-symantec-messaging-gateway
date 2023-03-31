@@ -2,6 +2,10 @@ import requests
 import arrow
 import re
 import json
+import time
+import csv
+import string
+from io import StringIO
 from bs4 import BeautifulSoup
 from requests_toolbelt.utils import dump
 from connectors.core.connector import ConnectorError, get_logger
@@ -9,6 +13,7 @@ from connectors.core.connector import ConnectorError, get_logger
 logger = get_logger('symantec-messaging-gateway')
 SENDER_GRP = 'reputation/sender-group/'
 AUDIT_LOGS = 'status/message-audit/MessageAuditFlow'
+AUDIT_LOGS_CSV = 'status/message-audit/MessageAuditFlow$export.flo?no-cache=true'
 VIEW_SENDER_GRP = SENDER_GRP + 'viewSenderGroup.do'
 filter_map={
 "Sender":"SENDER",
@@ -18,6 +23,17 @@ filter_map={
 "Connection IP":"ACCEPT",
 "Logical IP":"LOGICAL_IP"
 }
+
+def csv_to_json(csv_data,ignore_none_ascii):
+    json_array = []
+    if ignore_none_ascii:
+        csv_data = ''.join(filter(lambda x: x in set(string.printable), csv_data))
+
+    reader = csv.DictReader(StringIO(csv_data), delimiter=';')
+    for row in reader:
+        logger.debug('Adding row: {}'.format(row))
+        json_array.append(row)
+    return json.loads(json.dumps(json_array))
 
 def html_to_json(content):
     table_data = []
@@ -55,12 +71,15 @@ def html_to_json(content):
 
 
 def build_search_payload(params):
+    ''' builds requests payload for the search actions '''
     filters = {
-'hostFilterId': 0,
-'optionalFilterId': "none",
-'optionalFilterValue': '',
-'timeRange': 'timeRange.customize'
-}
+    'hostFilterId': '0',
+    'optionalFilterId': "none",
+    'optionalFilterValue': '',
+    'timeRange': 'timeRange.customize',
+    'encodingSelected': 'UTF-8',
+    'delimiterSelected': '0x003b', #Using ";" instead of "," to prevent parsing errors should the data contain extra commas
+    }
     for k, v in params.items():
         if 'start_time' in k:
             start_time = arrow.get(v)
@@ -100,7 +119,8 @@ class SMG:
             logger.info('Executing url {}'.format(url))
             call_method = getattr(self._session, method)
             response = call_method(url, params=params, data=data, headers=headers, verify=self.verify_ssl)
-            logger.debug('\nreq data:\n{0}\n'.format(dump.dump_all(response).decode('utf-8')))
+            if method in ['post']:
+                logger.debug('\nreq data:\n{0}\n'.format(dump.dump_all(response).decode('utf-8')))
             if response.ok:
                 logger.info('successfully get response for url {}'.format(url))
                 return response
@@ -266,20 +286,41 @@ class SMG:
 
     def test_connection(self, config):
         return self._login(config)
-        
-        
-    def search_audit_logs(self, config, params):
+
+
+    def audit_logs_search(self, config, params):
+        ''' Searches the logs and converts the html output to JSON '''
         try:
             search_params = build_search_payload(params)
             token = self._login(config)
             search_params.update({'symantec.brightmail.key.TOKEN': token})
             endpoint = AUDIT_LOGS + '$search.flo'
-            resp = self._make_request(AUDIT_LOGS + '$search.flo', 'post', data=search_params)
+            resp = self._make_request(endpoint, 'post', data=search_params)
             json_response = html_to_json(resp.text)
-            logger.debug(json.dumps(json_response, indent = 3))
+            logger.info(json.dumps(json_response, indent = 3))
             return html_to_json(resp.text)
 
         except Exception as err:
             logger.exception(str(err))
             raise ConnectorError(str(err))
         raise ConnectorError(resp.content)
+
+    def advanced_audit_logs_search(self, config, params):
+        ''' Exports the logs and converts the csv output to JSON '''
+        try:
+            ignore_none_ascii = params.get('remove_none_ascii', True)
+            search_params = build_search_payload(params)
+            token = self._login(config)
+            search_params.update({'symantec.brightmail.key.TOKEN': token})
+            self._make_request(AUDIT_LOGS + '$search.flo', 'post', data=search_params)
+            time.sleep(1)
+            resp = self._make_request(AUDIT_LOGS_CSV, 'post', data=search_params)
+            events_json = csv_to_json(resp.text, ignore_none_ascii)
+            logger.debug('Received events: {}'.format(events_json))
+            return events_json
+
+        except Exception as err:
+            logger.exception(str(err))
+            raise ConnectorError(str(err))
+        raise ConnectorError(resp.content)
+

@@ -46,11 +46,11 @@
     },
     "operations": [
         {
-            "operation": "search_audit_logs",
-            "title": "Search Emails",
-            "description": "Search emails in audit logs",
+            "operation": "audit_logs_search",
+            "title": "Quick Audit Log Search",
+            "description": "Quick audit log search. Returns the main event fields",
             "category": "Analytics",
-            "annotation": "search_audit_logs",
+            "annotation": "audit_logs_search",
             "output_schema": "",
             "parameters": [
                 {
@@ -130,6 +130,103 @@
             ],
             "enabled": true
         },
+        {
+            "operation": "advanced_audit_logs_search",
+            "title": "Advanced Audit Log Search",
+            "description": "Advanced audit log search which returns all available fields from events",
+            "category": "Analytics",
+            "annotation": "advanced_audit_logs_search",
+            "output_schema": "",
+            "parameters": [
+                {
+                    "title": "Search By",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "select",
+                    "options": [
+                        "Sender",
+                        "Recipient",
+                        "Subject",
+                        "Audit ID",
+                        "Connection IP",
+                        "Logical IP"
+                    ],
+                    "name": "mandatoryFilterId",
+                    "value": "Subject",
+                    "tooltip": "Select search by",
+                    "description": "Select search by."
+                },
+                {
+                    "title": "Search Value",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "text",
+                    "name": "mandatoryFilterValue",
+                    "value": "",
+                    "tooltip": "Value to search for based on the search by type. Exp baduser@badomain.com for Search by Sender",
+                    "description": "Value to search for based on the search by type. Exp baduser@badomain.com for Search by Sender"
+                },
+                {
+                    "title": "Start Time",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "datetime",
+                    "name": "start_time",
+                    "value": "",
+                    "tooltip": "Search start time (Search from:)",
+                    "description": "Search start time (Search from:)"
+                },
+                {
+                    "title": "End Time",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "datetime",
+                    "name": "end_time",
+                    "value": "",
+                    "tooltip": "Search end time (Search until:)",
+                    "description": "Search end time (Search until:)"
+                },
+                {
+                    "title": "Limit",
+                    "required": false,
+                    "editable": true,
+                    "visible": true,
+                    "type": "integer",
+                    "name": "entriesPerPage",
+                    "value": 15,
+                    "tooltip": "Entries to return per page",
+                    "description": "Entries to return per page"
+                },
+                {
+                    "title": "Offset",
+                    "required": false,
+                    "editable": true,
+                    "visible": true,
+                    "type": "integer",
+                    "name": "pageNumber",
+                    "value": 1,
+                    "tooltip": "Page number",
+                    "description": "Page number"
+                },
+                {
+                "title": "Remove None ASCII characters",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "checkbox",
+                "name": "remove_none_ascii",
+                "value": false,
+                "tooltip": "Removes none ascii characters from the search results",
+                "description": "Removes none ascii characters from the search results"
+            }
+            ],
+            "enabled": true
+        },
+
         {
             "operation": "blacklist_email",
             "title": "Block Email",
