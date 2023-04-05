@@ -1,3 +1,9 @@
+"""Copyright start
+  Copyright (C) 2008 - 2023 Fortinet Inc.
+  All rights reserved.
+  FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
+  Copyright end"""
+
 import requests
 import arrow
 import re
@@ -15,16 +21,19 @@ SENDER_GRP = 'reputation/sender-group/'
 AUDIT_LOGS = 'status/message-audit/MessageAuditFlow'
 AUDIT_LOGS_CSV = 'status/message-audit/MessageAuditFlow$export.flo?no-cache=true'
 VIEW_SENDER_GRP = SENDER_GRP + 'viewSenderGroup.do'
-filter_map={
-"Sender":"SENDER",
-"Recipient":"RCPTS",
-"Subject":"SUBJECT",
-"Audit ID":"AUDIT_UID",
-"Connection IP":"ACCEPT",
-"Logical IP":"LOGICAL_IP"
+
+filter_map = {
+    "Sender": "SENDER",
+    "Recipient": "RCPTS",
+    "Subject": "SUBJECT",
+    "Audit ID": "AUDIT_UID",
+    "Connection IP": "ACCEPT",
+    "Logical IP": "LOGICAL_IP"
 }
 
-def csv_to_json(csv_data,ignore_none_ascii):
+
+# utilities
+def csv_to_json(csv_data, ignore_none_ascii):
     json_array = []
     if ignore_none_ascii:
         csv_data = ''.join(filter(lambda x: x in set(string.printable), csv_data))
@@ -35,11 +44,12 @@ def csv_to_json(csv_data,ignore_none_ascii):
         json_array.append(row)
     return json.loads(json.dumps(json_array))
 
+
 def html_to_json(content):
     table_data = []
     table_headers = []
     soup = BeautifulSoup(content, "html.parser")
-    tab = soup.find("table",{"class":"table"})
+    tab = soup.find("table", {"class": "table"})
     rows = tab.find_all("tr")
     for tr_index, row in enumerate(rows):
         cells = row.find_all("td")
@@ -59,26 +69,28 @@ def html_to_json(content):
                     logger.debug('Parsed HTML table cell JS Script: {}'.format(js_text))
                 if links and len(links) > 0:
                     link = links[0]['href']
-                    audit_uid = re.search(r'[0-9a-fA-F]{8}\-[0-9a-fA-F]{16}\-[0-9a-fA-F]{2}\-[0-9a-fA-F]{12}',link).group()
-                    items.update({'auditUID':audit_uid})
+                    audit_uid = re.search(r'[0-9a-fA-F]{8}\-[0-9a-fA-F]{16}\-[0-9a-fA-F]{2}\-[0-9a-fA-F]{12}',
+                                          link).group()
+                    items.update({'auditUID': audit_uid})
                     logger.debug('Parsed HTML table cell Audit UUID: {}'.format(audit_uid))
 
                 items.update({table_headers[td_index]: cell_content if len(cell_content) > 0 else js_text})
         if items:
             table_data.append(items)
-        
-    return table_data    
+
+    return table_data
 
 
 def build_search_payload(params):
     ''' builds requests payload for the search actions '''
     filters = {
-    'hostFilterId': '0',
-    'optionalFilterId': "none",
-    'optionalFilterValue': '',
-    'timeRange': 'timeRange.customize',
-    'encodingSelected': 'UTF-8',
-    'delimiterSelected': '0x003b', #Using ";" instead of "," to prevent parsing errors should the data contain extra commas
+        'hostFilterId': '0',
+        'optionalFilterId': "none",
+        'optionalFilterValue': '',
+        'timeRange': 'timeRange.customize',
+        'encodingSelected': 'UTF-8',
+        'delimiterSelected': '0x003b',
+        # Using ";" instead of "," to prevent parsing errors should the data contain extra commas
     }
     for k, v in params.items():
         if 'start_time' in k:
@@ -94,13 +106,12 @@ def build_search_payload(params):
             filters.update({"endMinuteSelected": end_time.format("mm")})
 
         elif 'mandatoryFilterId' in k:
-            filters.update({k:filter_map[v]})
+            filters.update({k: filter_map[v]})
 
         else:
-            filters.update({k:v})
+            filters.update({k: v})
+    return filters
 
-    return filters  
-  
 
 class SMG:
 
@@ -111,7 +122,6 @@ class SMG:
         if not base_url.startswith('https://'):
             base_url = 'https://' + base_url
         self.base_url = base_url
-
 
     def _make_request(self, endpoint, method='get', params=None, data=None, headers=None):
         try:
@@ -287,7 +297,6 @@ class SMG:
     def test_connection(self, config):
         return self._login(config)
 
-
     def audit_logs_search(self, config, params):
         ''' Searches the logs and converts the html output to JSON '''
         try:
@@ -297,13 +306,11 @@ class SMG:
             endpoint = AUDIT_LOGS + '$search.flo'
             resp = self._make_request(endpoint, 'post', data=search_params)
             json_response = html_to_json(resp.text)
-            logger.info(json.dumps(json_response, indent = 3))
+            logger.debug(json.dumps(json_response, indent=3))
             return html_to_json(resp.text)
-
         except Exception as err:
             logger.exception(str(err))
             raise ConnectorError(str(err))
-        raise ConnectorError(resp.content)
 
     def advanced_audit_logs_search(self, config, params):
         ''' Exports the logs and converts the csv output to JSON '''
@@ -316,11 +323,9 @@ class SMG:
             time.sleep(1)
             resp = self._make_request(AUDIT_LOGS_CSV, 'post', data=search_params)
             events_json = csv_to_json(resp.text, ignore_none_ascii)
-            logger.debug('Received events: {}'.format(events_json))
+            logger.debug('Received events: {0}'.format(events_json))
             return events_json
 
         except Exception as err:
             logger.exception(str(err))
             raise ConnectorError(str(err))
-        raise ConnectorError(resp.content)
-
