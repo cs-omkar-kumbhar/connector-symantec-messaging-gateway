@@ -14,6 +14,7 @@
     "fields": [
       {
         "title": "Server URL",
+        "description": "URL of the Symantec Messaging Gateway server to which you will connect and perform automated operations.",
         "required": true,
         "editable": true,
         "visible": true,
@@ -22,6 +23,7 @@
       },
       {
         "title": "Username",
+        "description": "Username for accessing Symantec Messaging Gateway to which you will connect and perform the automated operations.",
         "required": true,
         "editable": true,
         "visible": true,
@@ -30,6 +32,7 @@
       },
       {
         "title": "Password",
+        "description": "Password for accessing Symantec Messaging Gateway to which you will connect and perform the automated operations.",
         "required": true,
         "editable": true,
         "visible": true,
@@ -38,6 +41,7 @@
       },
       {
         "title": "Verify SSL",
+        "description": "Specifies whether the SSL certificate for the server is to be verified or not.\nDefaults to True.",
         "required": false,
         "editable": true,
         "visible": true,
@@ -51,13 +55,20 @@
     {
       "operation": "blacklist_email",
       "title": "Block Email",
-      "description": "Add an email address to the list of bad senders",
+      "description": "Adds an email address that you have specified to the list of bad senders on Symantec Messaging Gateway.",
       "category": "Containment",
       "annotation": "block_email",
-      "output_schema": "",
+      "output_schema": {
+        "data": "",
+        "status": "",
+        "message": "",
+        "operation": "",
+        "execution_time": ""
+      },
       "parameters": [
         {
           "title": "Email Address",
+          "description": "Email address that you want to block, i.e., add to the list of bad senders on Symantec Messaging Gateway.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -70,13 +81,20 @@
     {
       "operation": "unblacklist_email",
       "title": "Unblock Email",
-      "description": "Remove an email address from the list of bad senders",
+      "description": "Removes an email address that you have specified from the list of bad senders on Symantec Messaging Gateway.",
       "category": "Remediation",
       "annotation": "unblock_email",
-      "output_schema": "",
+      "output_schema": {
+        "data": "",
+        "status": "",
+        "message": "",
+        "operation": "",
+        "execution_time": ""
+      },
       "parameters": [
         {
           "title": "Email Address",
+          "description": "Email address that you want to unblock, i.e., remove from the list of bad senders on Symantec Messaging Gateway.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -89,13 +107,20 @@
     {
       "operation": "blacklist_domain",
       "title": "Block Domain",
-      "description": "Add domain to the list of bad senders",
+      "description": "Adds a domain that you have specified to the list of bad senders on Symantec Messaging Gateway.",
       "category": "Containment",
       "annotation": "block_domain",
-      "output_schema": "",
+      "output_schema": {
+        "data": "",
+        "status": "",
+        "message": "",
+        "operation": "",
+        "execution_time": ""
+      },
       "parameters": [
         {
           "title": "Domain",
+          "description": "Name of the domain that you want to block, i.e., add to the list of bad senders on Symantec Messaging Gateway.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -108,13 +133,20 @@
     {
       "operation": "unblacklist_domain",
       "title": "Unblock Domain",
-      "description": "Remove a domain from the list of Bad senders",
+      "description": "Removes a domain that you have specified from the list of bad senders on Symantec Messaging Gateway.",
       "category": "Remediation",
       "annotation": "unblock_domain",
-      "output_schema": "",
+      "output_schema": {
+        "data": "",
+        "status": "",
+        "message": "",
+        "operation": "",
+        "execution_time": ""
+      },
       "parameters": [
         {
           "title": "Domain",
+          "description": "Name of the domain that you want to unblock, i.e., remove from the list of bad senders on Symantec Messaging Gateway.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -127,13 +159,20 @@
     {
       "operation": "blacklist_ip",
       "title": "Block IP",
-      "description": "Add an IP address to the list of bad senders",
+      "description": "Adds an IP address that you have specified to the list of bad senders on Symantec Messaging Gateway.",
       "category": "Containment",
       "annotation": "block_ip",
-      "output_schema": "",
+      "output_schema": {
+        "data": "",
+        "status": "",
+        "message": "",
+        "operation": "",
+        "execution_time": ""
+      },
       "parameters": [
         {
           "title": "IP Address",
+          "description": "IP address that you want to block, i.e., add to the list of bad senders on Symantec Messaging Gateway.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -146,13 +185,20 @@
     {
       "operation": "unblacklist_ip",
       "title": "Unblock IP",
-      "description": "Remove an IP address from the list of bad senders",
+      "description": "Removes an IP address that you have specified from the list of bad senders on Symantec Messaging Gateway.",
       "category": "Remediation",
       "annotation": "unblock_ip",
-      "output_schema": "",
+      "output_schema": {
+        "data": "",
+        "status": "",
+        "message": "",
+        "operation": "",
+        "execution_time": ""
+      },
       "parameters": [
         {
           "title": "IP Address",
+          "description": "IP address that you want to unblock, i.e., remove from the list of bad senders on Symantec Messaging Gateway.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -165,7 +211,7 @@
     {
       "operation": "audit_logs_search",
       "title": "Quick Audit Log Search",
-      "description": "Quick audit log search. Returns the main event fields",
+      "description": "Searches for audit logs from Symantec Messaging gateway based on the filter criteria that you have specified. Quick Audit Log Search returns the main event fields.",
       "category": "investigation",
       "annotation": "audit_logs_search",
       "output_schema": {},
@@ -187,7 +233,7 @@
           "name": "mandatoryFilterId",
           "value": "Subject",
           "tooltip": "Select search by",
-          "description": "Select search by."
+          "description": "Select the filter based on which you want to search the audit logs."
         },
         {
           "title": "Search Value",
@@ -231,7 +277,7 @@
           "name": "entriesPerPage",
           "value": 15,
           "tooltip": "Entries to return per page",
-          "description": "Entries to return per page"
+          "description": "Specify number of records to return per page."
         },
         {
           "title": "Offset",
@@ -242,7 +288,7 @@
           "name": "pageNumber",
           "value": 1,
           "tooltip": "Page number",
-          "description": "Page number"
+          "description": "Specify the page number from where to fetch the page."
         }
       ],
       "enabled": true
@@ -250,7 +296,7 @@
     {
       "operation": "advanced_audit_logs_search",
       "title": "Advanced Audit Log Search",
-      "description": "Advanced audit log search which returns all available fields from events",
+      "description": "Searches for audit logs from Symantec Messaging gateway based on the filter criteria that you have specified. Advanced audit log search which returns all available fields from events",
       "category": "investigation",
       "annotation": "advanced_audit_logs_search",
       "output_schema": {},
@@ -316,7 +362,7 @@
           "name": "entriesPerPage",
           "value": 15,
           "tooltip": "Entries to return per page",
-          "description": "Entries to return per page"
+          "description": "Specify number of records to return per page."
         },
         {
           "title": "Offset",
@@ -327,7 +373,7 @@
           "name": "pageNumber",
           "value": 1,
           "tooltip": "Page number",
-          "description": "Page number"
+          "description": "Specify the page number from where to fetch the page."
         },
         {
           "title": "Remove None ASCII characters",
