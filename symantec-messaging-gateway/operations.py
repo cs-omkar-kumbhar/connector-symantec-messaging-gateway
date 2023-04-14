@@ -303,8 +303,14 @@ class SMG:
             search_params = build_search_payload(params)
             token = self._login(config)
             search_params.update({'symantec.brightmail.key.TOKEN': token})
+            if params.get('entriesPerPage'):
+                endpoint = AUDIT_LOGS + '$changeEntriesPerPage.flo'
+                response = self._make_request(endpoint, 'post', data=search_params)
             endpoint = AUDIT_LOGS + '$search.flo'
             resp = self._make_request(endpoint, 'post', data=search_params)
+            if params.get('pageNumber') and params.get('pageNumber') > 1:
+                endpoint = AUDIT_LOGS + '$gotoPage.flo'
+                resp = self._make_request(endpoint, 'post', data=search_params)
             json_response = html_to_json(resp.text)
             logger.debug(json.dumps(json_response, indent=3))
             return html_to_json(resp.text)
