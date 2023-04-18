@@ -9,7 +9,7 @@
   "category": "Email Gateway",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
-  "help_online": "",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/1.1.0/symantec-messaging-gateway/565/symantec-messaging-gateway-v1-1-0",
   "configuration": {
     "fields": [
       {
@@ -41,7 +41,7 @@
       },
       {
         "title": "Verify SSL",
-        "description": "Specifies whether the SSL certificate for the server is to be verified or not.\nDefaults to True.",
+        "description": "Specifies whether the SSL certificate for the server is to be verified or not. Defaults to True.",
         "required": false,
         "editable": true,
         "visible": true,
@@ -68,7 +68,7 @@
       "parameters": [
         {
           "title": "Email Address",
-          "description": "Email address that you want to block, i.e., add to the list of bad senders on Symantec Messaging Gateway.",
+          "description": "Specify the email address that you want to block, i.e., add to the list of bad senders on Symantec Messaging Gateway.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -81,7 +81,7 @@
     {
       "operation": "unblacklist_email",
       "title": "Unblock Email",
-      "description": "Removes an email address that you have specified from the list of bad senders on Symantec Messaging Gateway.",
+      "description": "Removes an email address you have specified from the list of bad senders on Symantec Messaging Gateway.",
       "category": "Remediation",
       "annotation": "unblock_email",
       "output_schema": {
@@ -94,7 +94,7 @@
       "parameters": [
         {
           "title": "Email Address",
-          "description": "Email address that you want to unblock, i.e., remove from the list of bad senders on Symantec Messaging Gateway.",
+          "description": "Specify the email address that you want to unblock, i.e., remove from the list of bad senders on Symantec Messaging Gateway.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -107,7 +107,7 @@
     {
       "operation": "blacklist_domain",
       "title": "Block Domain",
-      "description": "Adds a domain that you have specified to the list of bad senders on Symantec Messaging Gateway.",
+      "description": "Adds a domain you have specified to the list of bad senders on Symantec Messaging Gateway.",
       "category": "Containment",
       "annotation": "block_domain",
       "output_schema": {
@@ -120,7 +120,7 @@
       "parameters": [
         {
           "title": "Domain",
-          "description": "Name of the domain that you want to block, i.e., add to the list of bad senders on Symantec Messaging Gateway.",
+          "description": "Specify the name of the domain that you want to block, i.e., add to the list of bad senders on Symantec Messaging Gateway.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -133,7 +133,7 @@
     {
       "operation": "unblacklist_domain",
       "title": "Unblock Domain",
-      "description": "Removes a domain that you have specified from the list of bad senders on Symantec Messaging Gateway.",
+      "description": "Removes a domain you have specified from the list of bad senders on Symantec Messaging Gateway.",
       "category": "Remediation",
       "annotation": "unblock_domain",
       "output_schema": {
@@ -146,7 +146,7 @@
       "parameters": [
         {
           "title": "Domain",
-          "description": "Name of the domain that you want to unblock, i.e., remove from the list of bad senders on Symantec Messaging Gateway.",
+          "description": "Specify the name of the domain that you want to unblock, i.e., remove from the list of bad senders on Symantec Messaging Gateway.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -159,7 +159,7 @@
     {
       "operation": "blacklist_ip",
       "title": "Block IP",
-      "description": "Adds an IP address that you have specified to the list of bad senders on Symantec Messaging Gateway.",
+      "description": "Adds an IP address you have specified to the list of bad senders on Symantec Messaging Gateway.",
       "category": "Containment",
       "annotation": "block_ip",
       "output_schema": {
@@ -172,7 +172,7 @@
       "parameters": [
         {
           "title": "IP Address",
-          "description": "IP address that you want to block, i.e., add to the list of bad senders on Symantec Messaging Gateway.",
+          "description": "Specify the IP address that you want to block, i.e., add to the list of bad senders on Symantec Messaging Gateway.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -185,7 +185,7 @@
     {
       "operation": "unblacklist_ip",
       "title": "Unblock IP",
-      "description": "Removes an IP address that you have specified from the list of bad senders on Symantec Messaging Gateway.",
+      "description": "Removes an IP address you have specified from the list of bad senders on Symantec Messaging Gateway.",
       "category": "Remediation",
       "annotation": "unblock_ip",
       "output_schema": {
@@ -198,7 +198,7 @@
       "parameters": [
         {
           "title": "IP Address",
-          "description": "IP address that you want to unblock, i.e., remove from the list of bad senders on Symantec Messaging Gateway.",
+          "description": "Specify the IP address that you want to unblock, i.e., remove from the list of bad senders on Symantec Messaging Gateway.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -211,7 +211,7 @@
     {
       "operation": "audit_logs_search",
       "title": "Quick Audit Log Search",
-      "description": "Searches for audit logs from Symantec Messaging gateway based on the filter criteria that you have specified. Quick Audit Log Search returns the main event fields.",
+      "description": "Searches for audit logs from Symantec Messaging gateway based on the filter criteria you have specified. This operation returns the main event fields.",
       "category": "investigation",
       "annotation": "audit_logs_search",
       "output_schema": [
@@ -242,8 +242,8 @@
           ],
           "name": "mandatoryFilterId",
           "value": "Subject",
-          "tooltip": "Select the search filter based on which you want to search the audit logs. You can choose from the following available options: Sender, Recipient, Subject, Audit ID, Connection IP, or Logical IP",
-          "description": "Select the search filter based on which you want to search the audit logs. You can choose from the following available options: Sender, Recipient, Subject, Audit ID, Connection IP, or Logical IP"
+          "tooltip": "Select the search filter based on which you want to search the audit logs in Search By Symantec Messaging Gateway. You can choose from the following options: Sender, Recipient, Subject, Audit ID, Connection IP, or Logical IP.",
+          "description": "Select the search filter based on which you want to search the audit logs in Search By Symantec Messaging Gateway. You can choose from the following options: Sender, Recipient, Subject, Audit ID, Connection IP, or Logical IP."
         },
         {
           "title": "Search Value",
@@ -252,8 +252,8 @@
           "visible": true,
           "type": "text",
           "name": "mandatoryFilterValue",
-          "tooltip": "Value to search for based on the search by type. Exp baduser@badomain.com for Search by Sender",
-          "description": "Value to search for based on the search by type. Exp baduser@badomain.com for Search by Sender"
+          "tooltip": "Specify the value using which you want to search the audit logs in Symantec Messaging Gateway, based on the filter selected in the 'Search By' drop-down list. For example, enter baduser@badomain.com if you have selected 'Sender' in the 'Search By' drop-down list.",
+          "description": "Specify the value using which you want to search the audit logs in Symantec Messaging Gateway, based on the filter selected in the 'Search By' drop-down list. For example, enter baduser@badomain.com if you have selected 'Sender' in the 'Search By' drop-down list."
         },
         {
           "title": "Start Time",
@@ -262,8 +262,8 @@
           "visible": true,
           "type": "datetime",
           "name": "start_time",
-          "tooltip": "Select the DateTime using which you want to filter the result set to only include only those items that have been created after the specified timestamp.",
-          "description": "Select the DateTime using which you want to filter the result set to only include only those items that have been created after the specified timestamp."
+          "tooltip": "(Optional) Select the DateTime using which you want to filter the result set to only include only those items that have been created after the specified timestamp.",
+          "description": "(Optional) Select the DateTime using which you want to filter the result set to only include only those items that have been created after the specified timestamp."
         },
         {
           "title": "End Time",
@@ -272,8 +272,8 @@
           "visible": true,
           "type": "datetime",
           "name": "end_time",
-          "tooltip": "Select the DateTime using which you want to filter the result set to only include only those items that have been created before the specified timestamp.",
-          "description": "Select the DateTime using which you want to filter the result set to only include only those items that have been created before the specified timestamp."
+          "tooltip": "(Optional) Select the DateTime using which you want to filter the result set to only include only those items that have been created before the specified timestamp.",
+          "description": "(Optional) Select the DateTime using which you want to filter the result set to only include only those items that have been created before the specified timestamp."
         },
         {
           "title": "Limit",
@@ -283,8 +283,8 @@
           "type": "integer",
           "name": "entriesPerPage",
           "value": 10,
-          "tooltip": "Specify the maximum number of results, per page, that this operation should return. By default, this option is set as 10.",
-          "description": "Specify the maximum number of results, per page, that this operation should return. By default, this option is set as 10."
+          "tooltip": "(Optional) Specify the maximum number of results, per page, that this operation should return. By default, this option is set as 10.",
+          "description": "(Optional) Specify the maximum number of results, per page, that this operation should return. By default, this option is set as 10."
         },
         {
           "title": "Offset",
@@ -294,8 +294,8 @@
           "type": "integer",
           "name": "pageNumber",
           "value": 1,
-          "tooltip": "Index of the first item to be returned by this operation. This parameter is useful for pagination and for getting a subset of items. By default, this is set as 1.",
-          "description": "Index of the first item to be returned by this operation. This parameter is useful for pagination and for getting a subset of items. By default, this is set as 1."
+          "tooltip": "(Optional) Specify the index of the first item to be returned by this operation. This parameter is useful for pagination and for getting a subset of items. By default, this is set as 1.",
+          "description": "(Optional) Specify the index of the first item to be returned by this operation. This parameter is useful for pagination and for getting a subset of items. By default, this is set as 1."
         }
       ],
       "enabled": true
@@ -303,7 +303,7 @@
     {
       "operation": "advanced_audit_logs_search",
       "title": "Advanced Audit Log Search",
-      "description": "Searches for audit logs from Symantec Messaging gateway based on the filter criteria that you have specified. Advanced audit log search which returns all available fields from events",
+      "description": "Searches for audit logs from Symantec Messaging gateway based on the filter criteria you have specified. This operation returns all available event fields.",
       "category": "investigation",
       "annotation": "advanced_audit_logs_search",
       "output_schema": [
@@ -352,8 +352,8 @@
           ],
           "name": "mandatoryFilterId",
           "value": "Subject",
-          "tooltip": "Select the search filter based on which you want to search the audit logs. You can choose from the following available options: Sender, Recipient, Subject, Audit ID, Connection IP, or Logical IP",
-          "description": "Select the search filter based on which you want to search the audit logs. You can choose from the following available options: Sender, Recipient, Subject, Audit ID, Connection IP, or Logical IP"
+          "tooltip": "Select the search filter based on which you want to search the audit logs in Symantec Messaging Gateway. You can choose from the following available options: Sender, Recipient, Subject, Audit ID, Connection IP, or Logical IP.",
+          "description": "Select the search filter based on which you want to search the audit logs in Symantec Messaging Gateway. You can choose from the following available options: Sender, Recipient, Subject, Audit ID, Connection IP, or Logical IP."
         },
         {
           "title": "Search Value",
@@ -362,9 +362,8 @@
           "visible": true,
           "type": "text",
           "name": "mandatoryFilterValue",
-          "value": "",
-          "tooltip": "Value to search for based on the search by type. Exp baduser@badomain.com for Search by Sender",
-          "description": "Value to search for based on the search by type. Exp baduser@badomain.com for Search by Sender"
+          "tooltip": "Specify the value using which you want to search the audit logs in Symantec Messaging Gateway, based on the filter selected in the 'Search By' drop-down list. For example, enter baduser@badomain.com if you have selected 'Sender' in the 'Search By' drop-down list.",
+          "description": "Specify the value using which you want to search the audit logs in Symantec Messaging Gateway, based on the filter selected in the 'Search By' drop-down list. For example, enter baduser@badomain.com if you have selected 'Sender' in the 'Search By' drop-down list."
         },
         {
           "title": "Start Time",
@@ -394,8 +393,8 @@
           "type": "checkbox",
           "name": "remove_none_ascii",
           "value": false,
-          "tooltip": "Removes none ascii characters from the search results",
-          "description": "Removes none ascii characters from the search results"
+          "tooltip": "Select this option to remove 'none' ASCII characters from the search results.",
+          "description": "Select this option to remove 'none' ASCII characters from the search results."
         }
       ],
       "enabled": true
