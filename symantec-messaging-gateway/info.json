@@ -283,7 +283,7 @@
           "type": "integer",
           "name": "entriesPerPage",
           "value": 10,
-          "tooltip": "(Optional) Specify the maximum number of results, per page, that this operation should return. By default, this option is set as 10.",
+          "tooltip": "(Optional) Specify the maximum number of results, per page, that this operation should return. By default, this option is set as 10. Note: Possible values are 10, 25, 50, or 100.",
           "description": "(Optional) Specify the maximum number of results, per page, that this operation should return. By default, this option is set as 10."
         },
         {
